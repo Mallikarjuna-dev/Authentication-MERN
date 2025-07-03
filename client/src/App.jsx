@@ -3,9 +3,11 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import EmailVerify from './pages/EmailVerify'
-import ResetPassword from './pages/ResetPassword'
+import ResetPassword from './pages/ResetPassword';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
+  
   return (
     <div className=''>
       <Routes>
@@ -14,6 +16,12 @@ const App = () => {
         <Route path='/email-verify' element={<EmailVerify />} />
         <Route path='/reset-password' element={<ResetPassword />} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        theme="light"
+        closeOnClick
+        autoClose={2000}
+      />
     </div>
   )
 }
