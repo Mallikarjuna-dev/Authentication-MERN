@@ -18,7 +18,7 @@ router.post("/send-verify-otp", userAuth, sendVerifyOtp);
 
 router.post("/verify-account", userAuth, verifyEmail);
 
-router.post("/is-auth", userAuth, isAuthenticated);
+router.get("/is-auth", userAuth, isAuthenticated);
 
 // Resetting password apis
 router.post("/send-reset-otp", sendResetOtp);

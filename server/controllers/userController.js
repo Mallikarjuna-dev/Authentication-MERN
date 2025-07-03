@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transporter from "../config/nodemailer.js"
+import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE } from "../config/emailTemplates.js";
 
 export const getUserData = async (req, res) => {
     try {
@@ -64,7 +65,7 @@ export const register = async (req, res) => {
         }
         await transporter.sendMail(mailOptions);
 
-        return res.json({ success: true })
+        return res.json({ success: true, message: "Registration successful!" })
 
     } catch (error) {
         return res.json({ success: false, message: error.message })
@@ -82,7 +83,7 @@ export const login = async (req, res) => {
     try {
         const user = await userModel.findOne({ email });
         if (!user) {
-            return res.json({ success: false, message: "User not found, Please register to login." })
+            return res.json({ success: false, message: "Register to login." })
         }
 
         if (user && (await bcrypt.compare(password, user.password))) {
@@ -94,7 +95,7 @@ export const login = async (req, res) => {
                 sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
-            return res.json({ success: true })
+            return res.json({ success: true, message: "Login successful." })
         } else {
             return res.json({ success: false, message: "Invalid password" })
         }
@@ -112,13 +113,13 @@ export const logout = async (req, res) => {
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             // maxAge: 7 * 24 * 60 * 60 * 1000
         })
-        return res.json({ success: true, message: "User logged out success" })
+        return res.json({ success: true, message: "Logged out successfully." })
     } catch (error) {
         return res.json({ success: false, message: error.message })
     }
 };
 
-// Otp for verifying registered users
+// Sending otp to users email for verification
 export const sendVerifyOtp = async (req, res) => {
     try {
         const userId = req.userId;
@@ -137,11 +138,12 @@ export const sendVerifyOtp = async (req, res) => {
             from: process.env.ADMIN_ID,
             to: user.email,
             subject: "Account verification OTP",
-            text: `Your OTP is ${otp}. Verify your account using this One Time Password.`,
+            // text: `Your OTP is ${otp}. Verify your account using this One Time Password.`,
+            html: EMAIL_VERIFY_TEMPLATE.replace("{{otp}}", otp).replace("{{email}}", user.email)
         }
         await transporter.sendMail(mailOption);
 
-        res.json({ success: true, message: "Verification OTP sent on Email" });
+        res.json({ success: true, message: "OTP sent to your email." });
 
     } catch (error) {
         return res.json({ success: false, message: error.message });
@@ -162,7 +164,7 @@ export const verifyEmail = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
         if (user.verifyOtp === "" || user.verifyOtp !== otp) {
-            return res.json({ success: false, message: "Invalid OTP" });
+            return res.json({ success: false, message: "Invalid verification code." });
         }
         if (user.verifyOtpExpireAt < Date.now()) {
             return res.json({ success: false, message: "OTP Expired" });
@@ -172,7 +174,7 @@ export const verifyEmail = async (req, res) => {
         user.verifyOtpExpireAt = 0;
 
         await user.save();
-        res.json({ success: true, mesage: "Email verification success" });
+        res.json({ success: true, message: "Email verified successfully." });
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }
@@ -209,7 +211,8 @@ export const sendResetOtp = async (req, res) => {
             from: process.env.ADMIN_ID,
             to: user.email,
             subject: "Password Reset OTP",
-            text: `Your OTP for resetting your password is ${otp}. Reset your account password using this One Time Password. Valid for only 5mins`,
+            // text: `Your OTP for resetting your password is ${otp}. Reset your account password using this One Time Password. Valid for only 5mins`,
+            html: PASSWORD_RESET_TEMPLATE.replace("{{otp}}", otp).replace("{{email}}", user.email)
         }
         await transporter.sendMail(mailOption);
         return res.json({ success: true, message: "OTP sent to your email." })
