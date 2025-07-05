@@ -93,6 +93,6 @@ const EmailVerify = () => {
             </form>
         </div>
     )
-}
+};
 
 export default EmailVerify;

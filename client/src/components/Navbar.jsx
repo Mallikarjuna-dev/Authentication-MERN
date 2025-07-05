@@ -61,7 +61,6 @@ const Navbar = () => {
                     Login <img src={assets.arrow_icon} alt='' />
                 </button>
             }
-
         </div>
     )
 };

@@ -7,9 +7,8 @@ import ResetPassword from './pages/ResetPassword';
 import { ToastContainer } from 'react-toastify';
 
 const App = () => {
-  
   return (
-    <div className=''>
+    <div>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
@@ -24,6 +23,6 @@ const App = () => {
       />
     </div>
   )
-}
+};
 
-export default App
+export default App;
