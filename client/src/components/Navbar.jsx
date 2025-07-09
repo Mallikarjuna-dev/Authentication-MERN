@@ -9,7 +9,6 @@ const Navbar = () => {
     const navigate = useNavigate();
     const { userData, serverUrl, setUserData, setIsLoggedIn } = useContext(AppContext);
 
-
     const sendVerificationOtp = async () => {
         try {
             // axios.defaults.withCredentials = true;
@@ -24,7 +23,6 @@ const Navbar = () => {
             toast.error(error.message);
         }
     }
-
 
     const logout = async () => {
         try {
