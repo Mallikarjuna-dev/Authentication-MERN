@@ -92,6 +92,7 @@ const ResetPassword = () => {
                     <p className='text-center mb-6 text-indigo-300'>
                         Enter youe registered Email address.
                     </p>
+                    
                     <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]'>
                         <img src={assets.mail_icon} alt='' className='w-3 h-3' />
                         <input
