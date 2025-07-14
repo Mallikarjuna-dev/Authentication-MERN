@@ -19,6 +19,7 @@ const Login = () => {
         try {
             e.preventDefault();
             // axios.defaults.withCredentials = true;
+            
             if (state === "Sign Up") {
                 const { data } = await axios.post(`${serverUrl}/api/auth/register`, {
                     name, email, password
@@ -77,7 +78,7 @@ const Login = () => {
                                 required />
                         </div>
                     )}
-                    
+
                     <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#454e7b]'>
                         <img src={assets.mail_icon} alt='' />
                         <input
