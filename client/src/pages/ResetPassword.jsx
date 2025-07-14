@@ -130,6 +130,7 @@ const ResetPassword = () => {
                             />
                         ))}
                     </div>
+                    
                     <button className='w-full py-2.5 bg-gradient-to-r from-indigo-500 to-indigo-900 text-white cursor-pointer rounded-full'>
                         Submit
                     </button>

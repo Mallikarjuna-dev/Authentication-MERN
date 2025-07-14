@@ -19,7 +19,6 @@ const Login = () => {
         try {
             e.preventDefault();
             // axios.defaults.withCredentials = true;
-
             if (state === "Sign Up") {
                 const { data } = await axios.post(`${serverUrl}/api/auth/register`, {
                     name, email, password
@@ -78,6 +77,7 @@ const Login = () => {
                                 required />
                         </div>
                     )}
+                    
                     <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#454e7b]'>
                         <img src={assets.mail_icon} alt='' />
                         <input
@@ -99,7 +99,7 @@ const Login = () => {
                             className='bg-transparent outline-none w-[80%]'
                             required />
                     </div>
-                    
+
                     <p onClick={() => navigate("/reset-password")} className='px-1 mb-4 text-indigo-500 cursor-pointer'>Forgot password?</p>
 
                     <button className='w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium cursor-pointer'>
