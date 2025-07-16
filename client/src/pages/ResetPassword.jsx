@@ -117,6 +117,7 @@ const ResetPassword = () => {
                     <p className='text-center mb-6 text-indigo-300'>
                         Enter the 6-digit code sent to your email id.
                     </p>
+                    
                     <div onPaste={handlePaste} className='flex justify-between mb-8'>
                         {Array(6).fill(0).map((_, index) => (
                             <input
